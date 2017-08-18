@@ -1,26 +1,12 @@
 <!doctype html>
-<html lang="en">
-  <head>
+<html ng-app="ShoppingListCheckOff" lang="en">
+  <head >
     <title>Shopping List Check Off</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <style>
-      .emptyMessage {
-        font-weight: bold;
-        color: red;
-        font-size: 1.2em;
-      }
-      li {
-        margin-bottom: 7px;
-        font-size: 1.2em;
-      }
-      li > button {
-        margin-left: 6px;
-      }
-      button > span {
-        color: green;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
   </head>
 <body>
   <div class="container">
@@ -29,22 +15,32 @@
   <div class="row">
 
     <!-- To Buy List -->
-    <div class="col-md-6">
+    <div ng-controller="ToBuyController as list1" class="col-md-6">
      <h2>To Buy:</h2>
      <ul>
-       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
-       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+       <li ng-repeat="item in list1.toBuy"> 
+            Buy {{item.quantity}} of {{item.item}}
+       <button class="btn btn-primary btn-xs" ng-click="list1.AlreadyBoughtItems($index)">
+       <span class="glyphicon glyphicon-ok"></span> Bought</button>
+       </li>
+       
      </ul>
-     <div class="emptyMessage">Everything is bought!</div>
+     <div ng-if="list1.toBuy.length ===0;" class="emptyMessage">
+             "Everything is bought!" 
+
+     </div>
     </div>
 
     <!-- Already Bought List -->
-    <div class="col-md-6">
+    <div ng-controller="AlreadyBoughtController as list2" class="col-md-6">
      <h2>Already Bought:</h2>
      <ul>
-       <li>Bought 10 cookies</li>
+       <li  ng-repeat="item in list2.bought track by $index">  
+        Bought {{item.quantity}} of {{item.item}}</li>
      </ul>
-     <div class="emptyMessage">Nothing bought yet.</div>
+     <div ng-if="list2.bought.length ===0; " class="emptyMessage">
+              Nothing is bought
+      </div>
     </div>
   </div>
 </div>
